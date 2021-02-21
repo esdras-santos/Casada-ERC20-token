@@ -14,10 +14,7 @@ contract('CasadaToken', function(accounts) {
       return tokenInstance.symbol();
     }).then(function(symbol) {
       assert.strictEqual(symbol, 'CAS', 'has the correct symbol');
-      return tokenInstance.standard();
-    }).then(function(standard) {
-      assert.strictEqual(standard, 'Casada v1.0', 'has the correct standard');
-    });
+    })
   })
 
   it('allocates the initial supply upon deployment', function() {

@@ -29,31 +29,31 @@ contract CasadaToken {
 
 
     function transfer(address _to, uint256 _value) public returns (bool success) {
-        require(balanceOf[msg.sender] >= _value/10000);
-        balanceOf[msg.sender] -= _value/10000;
-        balanceOf[_to] += _value/10000;
+        require(balanceOf[msg.sender] >= _value);
+        balanceOf[msg.sender] -= _value;
+        balanceOf[_to] += _value;
 
-        emit Transfer(msg.sender, _to, _value/10000);
+        emit Transfer(msg.sender, _to, _value);
 
         return true;
     }
 
     function approve(address _spender, uint256 _value) public returns (bool success) {
-        allowance[msg.sender][_spender] = _value/10000;
-        emit Approval(msg.sender, _spender, _value/10000);
+        allowance[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
         return true;        
     }
 
     function transferFrom(address _from, address _to, uint256 _value) public returns(bool success){
-        require(_value/10000 <= balanceOf[_from]);
-        require(_value/10000 <= allowance[_from][msg.sender]);
+        require(_value <= balanceOf[_from]);
+        require(_value <= allowance[_from][msg.sender]);
 
-        balanceOf[_from] -= _value/10000;
-        balanceOf[_to] += _value/10000;
+        balanceOf[_from] -= _value;
+        balanceOf[_to] += _value;
 
-        allowance[_from][msg.sender] -= _value/10000;
+        allowance[_from][msg.sender] -= _value;
 
-        emit Transfer(_from, _to, _value/10000);
+        emit Transfer(_from, _to, _value);
 
         return true;
     }
