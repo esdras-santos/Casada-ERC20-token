@@ -61,4 +61,22 @@ contract("CasadaTokenSale", function(accounts){
             assert(error.message.indexOf("revert") >= 0, "cannot purchase more tokens than available");
         });
     });
+
+    it("ends token sale", function(){
+        return CasadaToken.deployed().then(function(instance){
+            tokenInstance = instance;    
+            return CasadaTokenSale.deployed();
+        }).then(function(instance){
+            tokenSaleInstance = instance;
+            return tokenSaleInstance.endSale({from: buyer});
+        }).then(assert.fail).catch(function(error){
+            assert(error.message.indexOf("revert" >= 0, "must be admin to end sale"));
+            return tokenSaleInstance.endSale({from: admin})
+        }).then(function(receipt){
+            return tokenInstance.balanceOf(admin);
+        }).then(function(balance){
+            assert.strictEqual(balance.toNumber(),999990, "returns all unsold Casada tokens");
+            return tokenSaleInstance.tokenPrice();
+        });
+    });
 });
